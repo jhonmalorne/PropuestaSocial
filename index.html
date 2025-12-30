@@ -1,243 +1,205 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pedidos de Carne - Novillito Express</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-      background-color: #cb0c0c;
-      color: #333;
-    }
-    h1 {
-      text-align: center;
-      color: #fff300;
-    }
-    .form-container {
-      max-width: 900px;
-      margin: 0 auto;
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-    label {
-      font-weight: bold;
-      display: block;
-      margin-bottom: 5px;
-    }
-    input, select, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-    }
-    button {
-      padding: 10px 20px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    button:hover {
-      background-color: #45a049;
-    }
-    .product-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 15px;
-      list-style-type: none;
-      padding-left: 0;
-    }
-    .product-item {
-      padding: 15px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      background-color: #f1f1f1;
-      text-align: center;
-    }
-    .price-info {
-      font-size: 0.9em;
-      color: gray;
-    }
-    .total-price {
-      font-weight: bold;
-      color: green;
-    }
-    .order-total {
-      font-size: 1.2em;
-      font-weight: bold;
-      color: #333;
-      margin-top: 20px;
-      text-align: center;
-    }
-    .currency-selector {
-      text-align: right;
-      margin-bottom: 4px;
-    }
-    .payment-methods {
-  margin-top: 20px;
-  padding: 20px;
-  background-color: #f1f1f1;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-.payment-methods h3 {
-  margin-bottom: 15px;
-  color: #333;
-}
-.payment-option {
-  margin-bottom: 15px;
-}
-.payment-option strong {
-  color: #4CAF50;
-}
-.payment-option ul {
-  list-style-type: none;
-  padding-left: 0;
-}
-.payment-option ul li {
-  margin-bottom: 8px;
-}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NotiPanda - Marketplace Venezuela</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a0033 50%, #0f0f23 100%);
+            color: #fff; min-height: 100vh; overflow-x: hidden;
+        }
+        .header { 
+            text-align: center; padding: 2rem; background: linear-gradient(45deg, #00d4ff, #7b00ff, #00ff88);
+            background-size: 300% 300%; animation: gradientShift 3s ease infinite;
+        }
+        @keyframes gradientShift { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+        .logo { font-size: 3.5rem; font-weight: bold; text-shadow: 0 0 20px #00d4ff; margin-bottom: 1rem; }
+        .filters { 
+            display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; padding: 2rem; background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px); max-width: 1200px; margin: 0 auto;
+        }
+        .filter-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        select, input { 
+            padding: 0.8rem 1.2rem; border: none; border-radius: 25px; background: rgba(255,255,255,0.1);
+            color: #fff; font-size: 1rem; backdrop-filter: blur(10px); border: 2px solid transparent;
+            transition: all 0.3s ease; width: 200px;
+        }
+        select:focus, input:focus { outline: none; border-color: #00d4ff; box-shadow: 0 0 15px #00d4ff; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; }
+        .card { 
+            background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(0,0,0,0.5)); 
+            border-radius: 20px; padding: 2rem; backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.4s ease; position: relative; overflow: hidden;
+        }
+        .card:hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 20px 40px rgba(0,212,255,0.4); }
+        .card::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; 
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); transition: left 0.5s; }
+        .card:hover::before { left: 100%; }
+        .service-title { font-size: 1.8rem; color: #00ff88; margin-bottom: 1rem; font-weight: bold; }
+        .price { font-size: 2rem; color: #ffd700; font-weight: bold; margin: 1rem 0; text-shadow: 0 0 10px #ffd700; }
+        .location { color: #00d4ff; font-size: 1.1rem; margin-bottom: 1rem; }
+        .whatsapp-btn { 
+            width: 100%; padding: 1rem; background: linear-gradient(45deg, #25d366, #00d4ff); 
+            color: white; border: none; border-radius: 50px; font-size: 1.2rem; font-weight: bold;
+            cursor: pointer; transition: all 0.3s; box-shadow: 0 5px 15px rgba(37,211,102,0.4);
+        }
+        .whatsapp-btn:hover { transform: scale(1.05); box-shadow: 0 10px 25px rgba(37,211,102,0.6); }
+        .contact-section { 
+            text-align: center; padding: 4rem 2rem; background: linear-gradient(45deg, #7b00ff, #00ff88);
+            margin-top: 4rem; border-radius: 30px; max-width: 800px; margin-left: auto; margin-right: auto;
+        }
+        .contact-title { font-size: 2.5rem; margin-bottom: 1rem; }
+        .contact-info { font-size: 1.3rem; margin-bottom: 2rem; }
+        .admin-whatsapp { 
+            display: inline-block; padding: 1.2rem 2.5rem; background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 1.2rem;
+            box-shadow: 0 10px 30px rgba(255,107,107,0.5); transition: all 0.3s;
+        }
+        .admin-whatsapp:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(255,107,107,0.7); }
+        @media (max-width: 768px) { .filters { flex-direction: column; align-items: center; } .grid { grid-template-columns: 1fr; } }
+    </style>
 </head>
 <body>
-  <div class="currency-selector">
-    <label for="currency">Moneda: </label>
-    <select id="currency" onchange="cambiarMoneda()">
-      <option value="usd" selected>USD</option>
-      <option value="ves">VES</option>
-    </select>
-  </div>
-  <h1>Realiza tu Pedido de Carne - Novillito Express</h1>
-  <div class="form-container">
-    <form id="orderForm">
-      <!-- Nombre del Cliente -->
-      <label for="name">Nombre</label>
-      <input type="text" id="name" name="name" required>
-      <!-- Teléfono del Cliente -->
-      <label for="telefono">Teléfono</label>
-      <input type="tel" id="telefono" name="telefono" required>
-      <!-- Selección de Productos y Cantidades -->
-      <label for="productos">Selecciona los Productos</label>
-      <ul class="product-list">
-        <!-- Productos -->
-        <li class="product-item" data-usd="1" data-ves="46.68">
-          <label for="carne_molida">Carne Molida</label>
-          <input type="number" id="carne_molida" name="carne_molida" min="0.5" step="0.5" placeholder="Cantidad (kg)" oninput="calcularPrecio()">
-          <span class="price-info">Precio: $1 por kg</span>
-          <div class="total-price">Subtotal: $0.00</div>
-        </li>
-        <li class="product-item" data-usd="4.83" data-ves="225.47">
-          <label for="pollo">Pollo</label>
-          <input type="number" id="pollo" name="pollo" min="0.5" step="0.5" placeholder="Cantidad (kg)" oninput="calcularPrecio()">
-          <span class="price-info">Precio: $4.83 por kg</span>
-          <div class="total-price">Subtotal: $0.00</div>
-        </li>
-        <li class="product-item" data-usd="1.5" data-ves="70.02">
-          <label for="carne_cerdo">Carne de Cerdo</label>
-          <input type="number" id="carne_cerdo" name="carne_cerdo" min="0.5" step="0.5" placeholder="Cantidad (kg)" oninput="calcularPrecio()">
-          <span class="price-info">Precio: $1.5 por kg</span>
-          <div class="total-price">Subtotal: $0.00</div>
-        </li>
-         <li class="product-item" data-usd="1.5" data-ves="70.02">
-          <label for="carne_cerdo">Carne Para Guisar</label>
-          <input type="number" id="Carne Para Guisar" name="Carne Para Guisar" min="0.5" step="0.5" placeholder="Cantidad (kg)" oninput="calcularPrecio()">
-          <span class="price-info">Precio: $1.5 por kg</span>
-          <div class="total-price">Subtotal: $0.00</div>
-        </li>
-         <li class="product-item" data-usd="1.5" data-ves="70.02">
-          <label for="carne_cerdo">Costilla de Res</label>
-          <input type="number" id="Costilla de Res" name="Costilla de Res" min="0.5" step="0.5" placeholder="Cantidad (kg)" oninput="calcularPrecio()">
-          <span class="price-info">Precio: $1.5 por kg</span>
-          <div class="total-price">Subtotal: $0.00</div>
-        </li>
-         <li class="product-item" data-usd="1.5" data-ves="70.02">
-          <label for="carne_cerdo">Bisteck de Primera</label>
-          <input type="number" id="Bisteck de Primera" name="Bisteck de Primera" min="0.5" step="0.5" placeholder="Cantidad (kg)" oninput="calcularPrecio()">
-          <span class="price-info">Precio: $1.5 por kg</span>
-          <div class="total-price">Subtotal: $0.00</div>
-        </li>
-        <!-- Agrega más productos aquí con sus precios correspondientes -->
-      </ul>
-      <!-- Dirección Completa -->
-      <label for="direccion">Dirección de Envío</label>
-      <textarea id="direccion" name="direccion" rows="3" required placeholder="Ingresa tu dirección completa"></textarea>
-     <div class="form-container">
-  <form id="orderForm">
-    <!-- Aquí van tus inputs y selecciones de productos -->
+    <header class="header">
+        <div class="logo">🐼 NotiPanda</div>
+        <p>El marketplace más rápido de Venezuela</p>
+    </header>
 
-    <!-- Nueva Sección de Métodos de Pago -->
-    <div class="payment-methods">
-      <h3>Métodos de Pago</h3>
-      
-      <!-- Pago móvil -->
-      <div class="payment-option">
-        <strong>Pago Móvil:</strong>
-        <p>Banco: Banco de Venezuela</p>
-        <p>Teléfono: +58 424-1234567</p>
-        <p>C.I.: 12345678</p>
-      </div>
-      
-      <!-- USDT -->
-      <div class="payment-option">
-        <strong>USDT:</strong>
-        <p>Red: TRC20</p>
-        <p>Wallet: TXXXXXXXXXXXXXXX</p>
-      </div>
-      
-      <!-- Transferencias bancarias -->
-      <div class="payment-option">
-        <strong>Transferencia Bancaria:</strong>
-        <ul>
-          <li><strong>Banco de Venezuela:</strong> Cuenta Corriente 0102-0123-123456789012</li>
-          <li><strong>Banesco:</strong> Cuenta Corriente 0134-1234-567890123456</li>
-          <li><strong>Provincial:</strong> Cuenta Corriente 0108-1234-567890123456</li>
-          <li><strong>Mercantil:</strong> Cuenta Corriente 0105-1234-567890123456</li>
-        </ul>
-      </div>
+    <div class="filters">
+        <div class="filter-group">
+            <label>Categoría</label>
+            <select id="categoriaFilter">
+                <option value="">Todas</option>
+                <option value="comida">🍔 Comida</option>
+                <option value="internet">🌐 Internet</option>
+                <option value="educacion">📚 Educación</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label>Nombre</label>
+            <input type="text" id="nombreFilter" placeholder="Buscar por nombre...">
+        </div>
+        <div class="filter-group">
+            <label>Ubicación</label>
+            <input type="text" id="ubicacionFilter" placeholder="Los Guayos, Maiquetía...">
+        </div>
+        <div class="filter-group">
+            <label>Precio</label>
+            <select id="precioFilter">
+                <option value="">Todos</option>
+                <option value="bajo">Menor a $10</option>
+                <option value="medio">$10 - $20</option>
+                <option value="alto">Mayor a $20</option>
+            </select>
+        </div>
+        <button onclick="limpiarFiltros()" style="padding: 0.8rem 2rem; background: #ff6b6b; border: none; border-radius: 25px; color: white; cursor: pointer;">🔄 Limpiar</button>
     </div>
 
-    <!-- Botón de envío del formulario -->
-    <button type="submit">Enviar Pedido</button>
-  </form>
-  <div class="order-total">
-    <p>Total: <span id="totalPrice">0</span></p>
-  </div>
-</div>
+    <div class="container">
+        <div id="anunciosGrid" class="grid"></div>
+    </div>
 
+    <section class="contact-section">
+        <h2 class="contact-title">¿Quieres agregar tu negocio a NotiPanda?</h2>
+        <p class="contact-info">Comunícate conmigo para publicar tus servicios GRATIS</p>
+        <a href="https://wa.me/584244525765?text=Hola%20Jhon!%20Quiero%20publicar%20mi%20negocio%20en%20NotiPanda%20🐼" 
+           class="admin-whatsapp" target="_blank">📲 Contactar Administrador</a>
+    </section>
 
-  <script>
-    let currency = 'usd';
+    <script>
+        const anuncios = [
+            {
+                id: 1,
+                nombre: "Novillito Exprés",
+                servicio: "Carne de hamburguesa (pack 6 unidades)",
+                precio: 2,
+                ubicacion: "Los Guayos, Félix Ríos",
+                whatsapp: "584244569867",
+                categoria: "comida",
+                color: "#ff6b6b"
+            },
+            {
+                id: 2,
+                nombre: "Servicios JL",
+                servicio: "Venta de internet",
+                precio: 18,
+                ubicacion: "Los Guayos, Félix Ríos",
+                whatsapp: "584244525765",
+                categoria: "internet",
+                color: "#4ecdc4"
+            },
+            {
+                id: 3,
+                nombre: "Nexus.net",
+                servicio: "Tareas dirigidas (todos los niveles)",
+                precio: 5,
+                ubicacion: "Los Guayos, Félix Ríos",
+                whatsapp: "584244525765",
+                categoria: "educacion",
+                color: "#45b7d1"
+            }
+        ];
 
-    function cambiarMoneda() {
-      currency = document.getElementById('currency').value;
-      calcularPrecio();
-    }
+        function renderAnuncios(anunciosFiltrados) {
+            const grid = document.getElementById('anunciosGrid');
+            grid.innerHTML = anunciosFiltrados.map(ann => `
+                <div class="card" data-categoria="${ann.categoria}" data-precio="${ann.precio}" data-ubicacion="${ann.ubicacion}" data-nombre="${ann.nombre}">
+                    <div class="service-title" style="color: ${ann.color}">${ann.nombre}</div>
+                    <div class="service-desc">${ann.servicio}</div>
+                    <div class="price">$${ann.precio}</div>
+                    <div class="location">📍 ${ann.ubicacion}</div>
+                    <button class="whatsapp-btn" onclick="abrirWhatsapp('${ann.whatsapp}', '${ann.servicio} - $${ann.precio}')">
+                        💬 Contactar Vendedor
+                    </button>
+                </div>
+            `).join('');
+        }
 
-    function calcularPrecio() {
-      let total = 0;
-      document.querySelectorAll('.product-item').forEach(item => {
-        const input = item.querySelector('input');
-        const cantidad = parseFloat(input.value) || 0;
-        const pricePerKg = parseFloat(item.dataset[currency]);
-        const subtotal = cantidad * pricePerKg;
-        total += subtotal;
+        function filtrarAnuncios() {
+            const categoria = document.getElementById('categoriaFilter').value;
+            const nombre = document.getElementById('nombreFilter').value.toLowerCase();
+            const ubicacion = document.getElementById('ubicacionFilter').value.toLowerCase();
+            const precio = document.getElementById('precioFilter').value;
 
-        // Actualizar subtotal del producto
-        const subtotalElement = item.querySelector('.total-price');
-        subtotalElement.textContent = `Subtotal: ${currency === 'usd' ? '$' : ''}${subtotal.toFixed(2)} ${currency === 'ves' ? 'VES' : ''}`;
-      });
+            let filtrados = anuncios.filter(ann => {
+                return (!categoria || ann.categoria === categoria) &&
+                       (!nombre || ann.nombre.toLowerCase().includes(nombre) || ann.servicio.toLowerCase().includes(nombre)) &&
+                       (!ubicacion || ann.ubicacion.toLowerCase().includes(ubicacion)) &&
+                       (!precio || 
+                           (precio === 'bajo' && ann.precio < 10) ||
+                           (precio === 'medio' && ann.precio >= 10 && ann.precio <= 20) ||
+                           (precio === 'alto' && ann.precio > 20)
+                       );
+            });
 
-      // Actualizar el total general
-      document.getElementById('totalPrice').textContent = `${currency === 'usd' ? '$' : ''}${total.toFixed(2)} ${currency === 'ves' ? 'VES' : ''}`;
-    }
-  </script>
+            renderAnuncios(filtrados);
+        }
+
+        function abrirWhatsapp(telefono, mensaje) {
+            const url = `https://wa.me/${telefono}?text=Hola!%20Estoy%20interesado%20en:%20${encodeURIComponent(mensaje)}`;
+            window.open(url, '_blank');
+        }
+
+        function limpiarFiltros() {
+            document.getElementById('categoriaFilter').value = '';
+            document.getElementById('nombreFilter').value = '';
+            document.getElementById('ubicacionFilter').value = '';
+            document.getElementById('precioFilter').value = '';
+            renderAnuncios(anuncios);
+        }
+
+        // Event listeners para filtros en tiempo real
+        document.getElementById('categoriaFilter').addEventListener('change', filtrarAnuncios);
+        document.getElementById('nombreFilter').addEventListener('input', filtrarAnuncios);
+        document.getElementById('ubicacionFilter').addEventListener('input', filtrarAnuncios);
+        document.getElementById('precioFilter').addEventListener('change', filtrarAnuncios);
+
+        // Render inicial
+        renderAnuncios(anuncios);
+    </script>
 </body>
 </html>
