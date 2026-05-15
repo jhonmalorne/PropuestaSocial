@@ -1,883 +1,702 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Propuesta Social · Orden y Gestión · Carabobo</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-<style>
-:root{
-  --ink:#2f5fb3;
-  --ink2:#1a1a2e;
-  --gold:#b8960c;
-  --gold2:#d4af37;
-  --gold3:#f5e6a3;
-  --cream:#faf8f2;
-  --warm:#f0ebe0;
-  --slate:#4a5568;
-  --slate2:#718096;
-  --accent:#8b1a1a;
-  --accent2:#c0392b;
-  --green:#1a4731;
-  --green2:#2d7a52;
-  --border:rgba(184,150,12,0.2);
-  --shadow:0 20px 60px rgba(10,10,15,0.12);
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  font-family:'DM Sans',sans-serif;
-  background:var(--cream);
-  color:var(--ink);
-  line-height:1.7;
-}
-
-/* PRINT */
-@media print{
-  .no-print{display:none!important}
-  body{background:#fff}
-  .page-break{page-break-before:always}
-  #cover{min-height:auto;padding:60px 40px}
-}
-
-/* COVER */
-#cover{
-  min-height:100vh;
-  background:linear-gradient(160deg,#0a0a0f 0%,#0f1629 40%,#1a0a0a 80%,#0a0f0a 100%);
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  text-align:center;
-  padding:60px 40px;
-  position:relative;
-  overflow:hidden;
-}
-#cover::before{
-  content:'';position:absolute;inset:0;
-  background:
-    radial-gradient(ellipse 80% 60% at 50% 0%,rgba(184,150,12,0.12) 0%,transparent 60%),
-    radial-gradient(ellipse 60% 40% at 20% 80%,rgba(139,26,26,0.1) 0%,transparent 50%),
-    radial-gradient(ellipse 50% 50% at 80% 80%,rgba(26,71,49,0.08) 0%,transparent 50%);
-  pointer-events:none;
-}
-#cover::after{
-  content:'';position:absolute;inset:0;
-  background:repeating-linear-gradient(
-    0deg,transparent,transparent 80px,
-    rgba(184,150,12,0.015) 80px,rgba(184,150,12,0.015) 81px
-  ),
-  repeating-linear-gradient(
-    90deg,transparent,transparent 80px,
-    rgba(184,150,12,0.015) 80px,rgba(184,150,12,0.015) 81px
-  );
-  pointer-events:none;
-}
-.cover-eyebrow{
-  font-family:'DM Sans',sans-serif;
-  font-size:0.7rem;
-  letter-spacing:5px;
-  text-transform:uppercase;
-  color:var(--gold);
-  opacity:0.8;
-  margin-bottom:28px;
-  position:relative;
-  display:flex;align-items:center;gap:14px;
-}
-.cover-eyebrow::before,.cover-eyebrow::after{
-  content:'';display:block;width:40px;height:1px;background:var(--gold);opacity:0.4;
-}
-.cover-title{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(2.5rem,7vw,5rem);
-  font-weight:900;
-  color:#fff;
-  line-height:1.05;
-  letter-spacing:-1px;
-  position:relative;
-  margin-bottom:8px;
-}
-.cover-title span{
-  background:linear-gradient(135deg,var(--gold) 0%,var(--gold3) 50%,var(--gold2) 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  display:block;
-}
-.cover-subtitle{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(1rem,2.5vw,1.6rem);
-  color:rgba(255,255,255,0.55);
-  font-weight:400;
-  font-style:italic;
-  margin-bottom:36px;
-  position:relative;
-}
-.cover-divider{
-  width:80px;height:2px;
-  background:linear-gradient(90deg,transparent,var(--gold),transparent);
-  margin:0 auto 36px;
-  position:relative;
-}
-.cover-meta{
-  display:flex;gap:32px;justify-content:center;flex-wrap:wrap;
-  position:relative;
-}
-.cover-meta-item{
-  text-align:center;
-}
-.cover-meta-label{
-  font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;
-  color:rgba(255,255,255,0.35);margin-bottom:4px;
-}
-.cover-meta-val{
-  font-size:0.88rem;font-weight:500;color:rgba(255,255,255,0.75);
-}
-.cover-badge{
-  position:relative;
-  display:inline-flex;align-items:center;gap:8px;
-  background:rgba(184,150,12,0.12);
-  border:1px solid rgba(184,150,12,0.3);
-  border-radius:100px;
-  padding:8px 20px;
-  font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;
-  color:var(--gold);margin-bottom:36px;
-}
-.cover-scroll{
-  position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
-  display:flex;flex-direction:column;align-items:center;gap:6px;
-  color:rgba(255,255,255,0.2);font-size:0.65rem;letter-spacing:2px;
-  animation:float 2s ease-in-out infinite;
-  cursor:pointer;
-}
-@keyframes float{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-6px)}}
-.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,transparent,rgba(184,150,12,0.4))}
-
-/* MAIN CONTENT */
-#content{
-  max-width:900px;margin:0 auto;
-  padding:80px 32px;
-}
-@media(max-width:600px){
-  #content{padding:48px 20px;}
-}
-
-/* SECTION HEADINGS */
-.section{margin-bottom:80px;}
-.section-label{
-  font-size:0.65rem;letter-spacing:4px;text-transform:uppercase;
-  color:var(--gold);font-weight:600;
-  display:flex;align-items:center;gap:10px;margin-bottom:14px;
-}
-.section-label::before{content:'';width:24px;height:1px;background:var(--gold);}
-.section-title{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(1.8rem,4vw,2.6rem);
-  font-weight:700;color:var(--ink);
-  line-height:1.15;margin-bottom:20px;
-}
-.section-lead{
-  font-size:1.05rem;color:var(--slate);
-  line-height:1.75;max-width:680px;
-}
-
-/* DIVIDER */
-.divider{
-  width:100%;height:1px;
-  background:linear-gradient(90deg,transparent,var(--border) 30%,var(--border) 70%,transparent);
-  margin:60px 0;
-}
-
-/* CONTEXT BOX */
-.context-box{
-  background:linear-gradient(135deg,#0a0a0f,#0f1629);
-  border-left:3px solid var(--gold);
-  border-radius:0 12px 12px 0;
-  padding:28px 32px;
-  margin:32px 0;
-}
-.context-box p{
-  color:rgba(255,255,255,0.7);
-  font-size:0.92rem;line-height:1.8;
-}
-.context-box strong{color:var(--gold3);}
-
-/* STATS ROW */
-.stats-row{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-  gap:2px;margin:36px 0;
-  border:1px solid var(--border);border-radius:14px;overflow:hidden;
-}
-.stat-box{
-  background:var(--warm);
-  padding:24px 20px;text-align:center;
-}
-.stat-num{
-  font-family:'Playfair Display',serif;
-  font-size:2.2rem;font-weight:700;
-  color:var(--ink);line-height:1;margin-bottom:6px;
-}
-.stat-num span{color:var(--gold);font-size:1.4rem;}
-.stat-desc{font-size:0.72rem;color:var(--slate2);letter-spacing:0.5px;text-transform:uppercase;}
-
-/* PROJECT CARDS */
-.projects-grid{
-  display:grid;gap:20px;
-  grid-template-columns:repeat(auto-fill,minmax(380px,1fr));
-  margin-top:36px;
-}
-@media(max-width:600px){.projects-grid{grid-template-columns:1fr;}}
-.project-card{
-  background:#fff;
-  border:1px solid rgba(0,0,0,0.06);
-  border-radius:16px;
-  overflow:hidden;
-  box-shadow:var(--shadow);
-  transition:transform 0.3s,box-shadow 0.3s;
-}
-.project-card:hover{
-  transform:translateY(-4px);
-  box-shadow:0 32px 80px rgba(10,10,15,0.15);
-}
-.card-header{
-  padding:22px 24px 18px;
-  border-bottom:1px solid rgba(0,0,0,0.05);
-  display:flex;align-items:flex-start;gap:16px;
-}
-.card-icon{
-  width:48px;height:48px;border-radius:12px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:1.4rem;flex-shrink:0;
-}
-.card-meta{}
-.card-number{
-  font-size:0.62rem;letter-spacing:3px;text-transform:uppercase;
-  color:var(--slate2);margin-bottom:4px;
-}
-.card-title{
-  font-family:'Playfair Display',serif;
-  font-size:1.1rem;font-weight:700;color:var(--ink);line-height:1.2;
-}
-.card-body{padding:18px 24px 20px;}
-.card-desc{font-size:0.85rem;color:var(--slate);line-height:1.7;margin-bottom:14px;}
-.card-results{
-  background:var(--warm);border-radius:10px;padding:12px 14px;
-}
-.card-results-label{
-  font-size:0.62rem;letter-spacing:2px;text-transform:uppercase;
-  color:var(--gold);font-weight:600;margin-bottom:6px;
-}
-.card-result-item{
-  font-size:0.78rem;color:var(--slate);
-  padding:3px 0;display:flex;align-items:flex-start;gap:7px;
-}
-.card-result-item::before{content:'→';color:var(--gold);font-weight:700;flex-shrink:0;}
-.card-footer{
-  padding:14px 24px;
-  border-top:1px solid rgba(0,0,0,0.05);
-  display:flex;align-items:center;justify-content:space-between;
-  flex-wrap:wrap;gap:8px;
-}
-.impact-tag{
-  font-size:0.68rem;padding:4px 10px;border-radius:20px;font-weight:600;
-  letter-spacing:0.5px;
-}
-
-/* REFERENCES */
-.ref-card{
-  border:1px solid var(--border);border-radius:12px;
-  padding:24px 28px;margin-bottom:16px;
-  background:#fff;
-}
-.ref-region{
-  font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;
-  color:var(--gold);font-weight:600;margin-bottom:8px;
-}
-.ref-title{
-  font-family:'Playfair Display',serif;
-  font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:10px;
-}
-.ref-body{font-size:0.85rem;color:var(--slate);line-height:1.7;margin-bottom:12px;}
-.ref-results{
-  display:flex;gap:8px;flex-wrap:wrap;
-}
-.ref-chip{
-  background:var(--warm);border:1px solid var(--border);
-  border-radius:20px;padding:4px 12px;
-  font-size:0.72rem;color:var(--slate);
-}
-
-/* ROI TABLE */
-.roi-table{width:100%;border-collapse:collapse;margin-top:24px;}
-.roi-table th{
-  background:var(--ink);color:var(--gold3);
-  font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;
-  padding:12px 16px;text-align:left;font-weight:500;
-}
-.roi-table td{
-  padding:12px 16px;border-bottom:1px solid var(--border);
-  font-size:0.85rem;color:var(--slate);
-}
-.roi-table tr:last-child td{border-bottom:none;}
-.roi-table tr:hover td{background:var(--warm);}
-.roi-table .highlight{color:var(--green2);font-weight:600;}
-
-/* INVESTOR BOX */
-.investor-box{
-  background:linear-gradient(135deg,var(--ink),var(--ink2));
-  border:1px solid rgba(184,150,12,0.3);
-  border-radius:20px;padding:48px 40px;
-  text-align:center;margin-top:48px;
-  position:relative;overflow:hidden;
-}
-.investor-box::before{
-  content:'';position:absolute;
-  top:-60px;right:-60px;
-  width:200px;height:200px;border-radius:50%;
-  background:radial-gradient(circle,rgba(184,150,12,0.08),transparent 70%);
-}
-.investor-box h3{
-  font-family:'Playfair Display',serif;
-  font-size:1.8rem;font-weight:700;color:#fff;margin-bottom:16px;
-}
-.investor-box p{
-  color:rgba(255,255,255,0.6);font-size:0.92rem;
-  max-width:560px;margin:0 auto 28px;line-height:1.75;
-}
-.investor-pillars{
-  display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:28px;
-}
-.pillar{
-  background:rgba(184,150,12,0.1);border:1px solid rgba(184,150,12,0.25);
-  border-radius:10px;padding:12px 18px;
-  font-size:0.78rem;color:var(--gold3);
-  display:flex;align-items:center;gap:8px;
-}
-.investor-note{
-  font-size:0.75rem;color:rgba(255,255,255,0.3);
-  font-style:italic;margin-top:20px;
-}
-
-/* TIMELINE */
-.timeline{position:relative;padding-left:28px;margin-top:28px;}
-.timeline::before{
-  content:'';position:absolute;left:6px;top:6px;bottom:0;
-  width:2px;background:linear-gradient(to bottom,var(--gold),transparent);
-}
-.tl-item{position:relative;margin-bottom:24px;}
-.tl-dot{
-  position:absolute;left:-25px;top:5px;
-  width:12px;height:12px;border-radius:50%;
-  background:var(--gold);border:2px solid var(--cream);
-  box-shadow:0 0 0 3px rgba(184,150,12,0.2);
-}
-.tl-phase{
-  font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;
-  color:var(--gold);font-weight:600;margin-bottom:4px;
-}
-.tl-title{font-weight:600;color:var(--ink);margin-bottom:4px;font-size:0.9rem;}
-.tl-desc{font-size:0.82rem;color:var(--slate);}
-
-/* FOOTER */
-#footer{
-  background:var(--ink);
-  padding:40px 32px;text-align:center;
-}
-.footer-mark{
-  font-family:'Playfair Display',serif;
-  font-size:1.2rem;color:var(--gold);margin-bottom:8px;
-}
-.footer-sub{font-size:0.72rem;color:rgba(255,255,255,0.3);letter-spacing:1px;}
-
-/* PRINT BTN */
-.print-btn{
-  position:fixed;bottom:28px;right:28px;
-  background:linear-gradient(135deg,var(--gold),var(--gold2));
-  color:var(--ink);border:none;
-  border-radius:50px;padding:12px 22px;
-  font-family:'DM Sans',sans-serif;
-  font-weight:600;font-size:0.8rem;
-  cursor:pointer;box-shadow:0 8px 24px rgba(184,150,12,0.4);
-  display:flex;align-items:center;gap:8px;
-  z-index:100;transition:all 0.2s;
-  no-print:;
-}
-.print-btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(184,150,12,0.5);}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>Los Guayos · Orden y Gestión · Mapa Estratégico</title>
+    <!-- Leaflet 1.9.4 -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- html2canvas para capturar el mapa -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+        body {
+            background: #1d4e2b;
+            height: 100vh;
+            overflow: hidden;
+        }
+        #map {
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        /* Panel superior desplegable */
+        .brand-panel {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            border-radius: 50px 20px 50px 20px;
+            box-shadow: 0 6px 16px rgba(0, 40, 0, 0.4);
+            padding: 8px 16px 8px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-left: 5px solid #c5342a;
+            border-right: 3px solid #f0b84d;
+            transition: all 0.3s ease;
+            max-width: 95%;
+            pointer-events: none;
+        }
+        .brand-panel * {
+            pointer-events: auto;
+        }
+        .brand-panel.collapsed {
+            padding: 8px;
+            border-radius: 40px;
+        }
+        .brand-panel.collapsed .escudo-simbolo,
+        .brand-panel.collapsed .text-logo,
+        .brand-panel.collapsed .baldwyn,
+        .brand-panel.collapsed .fecha-union {
+            display: none;
+        }
+        .brand-panel .toggle-btn {
+            background: #002c47;
+            color: white;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            transition: 0.2s;
+        }
+        .brand-panel .toggle-btn:hover {
+            background: #0f3a5a;
+        }
+        .escudo-simbolo {
+            background: #002c47;
+            color: white;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 10px;
+            line-height: 1.2;
+            text-align: center;
+            box-shadow: 0 3px 0 #aa8330;
+            border: 2px solid #e0ae3a;
+        }
+        .escudo-simbolo i {
+            font-size: 20px;
+            color: #fdda7a;
+        }
+        .text-logo {
+            display: flex;
+            flex-direction: column;
+        }
+        .text-logo .municipio {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #0c4019;
+            letter-spacing: 0.3px;
+            line-height: 1.1;
+        }
+        .text-logo .municipio small {
+            font-size: 0.75rem;
+            color: #aa3f2e;
+            font-weight: 500;
+        }
+        .text-logo .gestion {
+            font-size: 1rem;
+            font-weight: 800;
+            background: linear-gradient(145deg, #1e592a, #35270f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .baldwyn {
+            background: #001f33;
+            color: white;
+            border-radius: 30px;
+            padding: 4px 14px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: inset 0 -2px 0 #dba43a;
+            white-space: nowrap;
+        }
+        .baldwyn i {
+            color: #f5c452;
+        }
+        .fecha-union {
+            background: #f2e3c2;
+            border-radius: 30px;
+            padding: 4px 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #28521c;
+            white-space: nowrap;
+        }
+        .fecha-union i {
+            color: #b37b2e;
+            margin-right: 4px;
+        }
+        /* Botones de capa base (inferior izquierda) */
+        .base-buttons {
+            position: absolute;
+            bottom: 25px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .base-btn {
+            background: white;
+            border: 2px solid #c49b3f;
+            border-radius: 40px;
+            padding: 10px 18px;
+            font-weight: bold;
+            color: #1d4e2b;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+            font-size: 0.9rem;
+            backdrop-filter: blur(4px);
+            background: rgba(255,255,255,0.9);
+        }
+        .base-btn.active {
+            background: #1d4e2b;
+            color: white;
+            border-color: #f0b84d;
+        }
+        .base-btn i {
+            font-size: 1.1rem;
+        }
+        /* Botón de descarga (junto a botones base) */
+        .download-btn {
+            background: #174027;
+            color: white;
+            border: none;
+            border-radius: 60px;
+            padding: 12px 22px;
+            font-weight: bold;
+            font-size: 1rem;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.6);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 4px solid #d6a741;
+            transition: 0.2s;
+            backdrop-filter: blur(2px);
+            margin-top: 10px;
+        }
+        .download-btn:hover {
+            background: #0c2d1a;
+            border-bottom-color: #b88b2c;
+            transform: scale(1.02);
+        }
+        /* Control de capas (Leaflet) lo posicionamos en bottomright */
+        .leaflet-control-layers {
+            border-radius: 20px !important;
+            border: 2px solid #c49b3f !important;
+            background: rgba(255,255,255,0.95) !important;
+            box-shadow: 0 4px 12px black !important;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .leaflet-control-layers label {
+            font-weight: 500;
+        }
+        .leaflet-control-zoom {
+            border: 2px solid #b38830 !important;
+            border-radius: 30px !important;
+            overflow: hidden;
+        }
+        .leaflet-popup-content {
+            min-width: 200px;
+            font-size: 0.9rem;
+        }
+        .btn-google-maps {
+            background: #1e5f3e;
+            color: white;
+            border: none;
+            border-radius: 40px;
+            padding: 8px 12px;
+            margin-top: 8px;
+            width: 100%;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border-bottom: 3px solid #f3b53b;
+            transition: 0.2s;
+        }
+        .btn-google-maps:hover {
+            background: #12452b;
+        }
+        /* Estilo para tooltips permanentes (sectores) */
+        .sector-tooltip {
+            background: rgba(0,0,0,0.7);
+            color: white;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 12px;
+            border: 1px solid #f0b84d;
+            white-space: nowrap;
+        }
+        /* Responsive */
+        @media (max-width: 700px) {
+            .base-buttons { bottom: 15px; left: 10px; }
+            .base-btn { padding: 8px 14px; font-size: 0.8rem; }
+            .download-btn { padding: 8px 16px; font-size: 0.9rem; }
+            .brand-panel .toggle-btn { width: 32px; height: 32px; }
+        }
+    </style>
 </head>
 <body>
+    <div id="map"></div>
 
-<!-- PORTADA -->
-<section id="cover">
-  <div class="cover-eyebrow">Documento de Inversión Social · Confidencial</div>
-  <div class="cover-badge">📋 Propuesta Estratégica · Región Carabobo · Venezuela</div>
-  <h1 class="cover-title">
-    Propuesta Social<br/>
-    <span>Orden y Gestión</span>
-  </h1>
-  <p class="cover-subtitle">Desarrollo comunitario integral con impacto medible</p>
-  <div class="cover-divider"></div>
-  <div class="cover-meta">
-    <div class="cover-meta-item">
-      <div class="cover-meta-label">Área de Impacto</div>
-      <div class="cover-meta-val">Estado Carabobo</div>
-    </div>
-    <div class="cover-meta-item">
-      <div class="cover-meta-label">Ejes Estratégicos</div>
-      <div class="cover-meta-val">8 Proyectos</div>
-    </div>
-    <div class="cover-meta-item">
-      <div class="cover-meta-label">Enfoque</div>
-      <div class="cover-meta-val">Modelo Sostenible</div>
-    </div>
-    <div class="cover-meta-item">
-      <div class="cover-meta-label">Año de Inicio</div>
-      <div class="cover-meta-val">2026</div>
-    </div>
-  </div>
-  <div class="cover-scroll" onclick="document.getElementById('content').scrollIntoView({behavior:'smooth'})">
-    <div class="scroll-line"></div>
-    CONTINUAR
-  </div>
-</section>
-
-<div id="content">
-
-  <!-- CONTEXTO -->
-  <section class="section">
-    <div class="section-label">Contexto</div>
-    <h2 class="section-title">Venezuela hoy:<br/>Una oportunidad en medio de la adversidad</h2>
-    <p class="section-lead">En contextos de alta vulnerabilidad social, las intervenciones comunitarias bien estructuradas generan los retornos más significativos —medibles en capital humano, cohesión social y reactivación económica local— con inversiones comparativamente bajas.</p>
-
-    <div class="context-box">
-      <p>Venezuela atraviesa una de las transformaciones socioeconómicas más complejas de su historia contemporánea. Sin embargo, esta misma complejidad ha generado comunidades altamente resilientes, capital humano subutilizado de gran calidad y una <strong>demanda social insatisfecha</strong> que representa terreno fértil para proyectos de impacto con visión de largo plazo. El Estado Carabobo, históricamente el motor industrial del país, conserva infraestructura, talento y tejido organizacional suficiente para sostener programas de esta naturaleza.</p>
+    <!-- Panel superior desplegable (identidad) -->
+    <div class="brand-panel" id="brandPanel">
+        <button class="toggle-btn" id="toggleBrandBtn"><i class="fas fa-chevron-up"></i></button>
+        <div class="escudo-simbolo">
+            <i class="fas fa-crown"></i>
+            <span>1·3 JUN<br>2026</span>
+        </div>
+        <div class="text-logo">
+            <div class="municipio">LOS GUAYOS <small>Carabobo</small></div>
+            <div class="gestion"><i class="fas fa-seedling" style="color:#2b7d3a;"></i> ORDEN Y GESTIÓN</div>
+        </div>
+        <div class="baldwyn">
+            <i class="fas fa-map-signal"></i> BALDWYN MUJICA
+        </div>
+        <div class="fecha-union">
+            <i class="fas fa-handshake"></i> ORDEN Y GESTIÓN
+        </div>
     </div>
 
-    <div class="stats-row">
-      <div class="stat-box">
-        <div class="stat-num">2.5<span>M+</span></div>
-        <div class="stat-desc">Habitantes en Carabobo</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-num">68<span>%</span></div>
-        <div class="stat-desc">Población en edad activa sin acceso a programas estructurados</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-num">+40<span>%</span></div>
-        <div class="stat-desc">Aumento en demanda de servicios comunitarios 2022–2024</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-num">3<span>×</span></div>
-        <div class="stat-desc">ROI social estimado en proyectos similares en la región</div>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- REFERENTES INTERNACIONALES -->
-  <section class="section">
-    <div class="section-label">Referentes Validados</div>
-    <h2 class="section-title">Modelos aplicados que demuestran el camino</h2>
-    <p class="section-lead">La propuesta no parte de cero. Se fundamenta en modelos exitosos aplicados en contextos latinoamericanos de alta vulnerabilidad, cuyos resultados han sido documentados y replicados.</p>
-
-    <div style="margin-top:32px">
-
-      <div class="ref-card">
-        <div class="ref-region">🌍 América Latina · Modelo Referencial 01</div>
-        <div class="ref-title">Programa de Desarrollo Comunitario Integral con Eje Deportivo y Alimentario</div>
-        <div class="ref-body">En comunidades periurbanas de Colombia y Brasil con indicadores de vulnerabilidad comparables a los de Carabobo, se implementaron programas que articularon deporte, alimentación y capacitación técnica bajo un mismo tejido organizacional. La clave del éxito fue el <strong>acompañamiento posterior a la intervención</strong> y la medición continua de indicadores sociales.</div>
-        <div class="ref-results">
-          <span class="ref-chip">📉 40% reducción en deserción escolar</span>
-          <span class="ref-chip">💪 +3,200 jóvenes beneficiados/programa</span>
-          <span class="ref-chip">🏅 72% de clubes deportivos autosostenibles a los 18 meses</span>
-          <span class="ref-chip">🍽️ 85% mejora en seguridad alimentaria familiar</span>
-        </div>
-      </div>
-
-      <div class="ref-card">
-        <div class="ref-region">🌱 América Latina · Modelo Referencial 02</div>
-        <div class="ref-title">Iniciativas de Educación Ecológica y Agroproductiva en Contextos Urbano-Rurales</div>
-        <div class="ref-body">En zonas periféricas de Ecuador y Perú se aplicaron programas de brigadas ecológicas escolares y huertos comunitarios con capacitación técnica agrícola. El componente diferenciador fue la <strong>formación de multiplicadores locales</strong>, que permitió escalar el impacto sin escalar proporcionalmente el presupuesto.</div>
-        <div class="ref-results">
-          <span class="ref-chip">♻️ 60% reducción en residuos sólidos no tratados</span>
-          <span class="ref-chip">🌿 +800 familias produciendo alimentos propios</span>
-          <span class="ref-chip">👩‍🏫 1 capacitador forma a 12 multiplicadores</span>
-          <span class="ref-chip">📈 Ahorro familiar estimado: 30% del gasto en alimentos</span>
-        </div>
-      </div>
-
-      <div class="ref-card">
-        <div class="ref-region">💻 Venezuela · Modelo Referencial 03</div>
-        <div class="ref-title">Plataformas de Contenido Educativo y Salud Preventiva en Comunidades con Baja Conectividad</div>
-        <div class="ref-body">Dentro del propio contexto venezolano, experiencias impulsadas por organizaciones de la sociedad civil en Caracas, Maracaibo y Valencia demostraron que los <strong>formatos híbridos (digital + presencial)</strong> con descarga offline pueden alcanzar a poblaciones con acceso limitado a internet, generando cambios conductuales sostenidos en salud reproductiva y hábitos pedagógicos.</div>
-        <div class="ref-results">
-          <span class="ref-chip">📱 +5,000 descargas en primeros 3 meses</span>
-          <span class="ref-chip">🏥 35% reducción en consultas evitables</span>
-          <span class="ref-chip">📚 92% de docentes reporta mejora en preparación de clases</span>
-        </div>
-      </div>
-
-      <div class="ref-card">
-        <div class="ref-region">⚡ Latinoamérica · Modelo Referencial 04</div>
-        <div class="ref-title">Democratización Energética mediante Paneles Solares en Sectores Populares</div>
-        <div class="ref-body">En Bolivia, República Dominicana y zonas rurales de Colombia se implementaron esquemas de acceso a energía solar para hogares y pequeños comercios con financiamiento blando y cooperativo. El modelo demostró que cuando la inversión inicial es gestionada colectivamente, los tiempos de retorno se reducen hasta en un <strong>60% respecto a soluciones individuales</strong>.</div>
-        <div class="ref-results">
-          <span class="ref-chip">💡 Ahorro energético promedio: 45% mensual</span>
-          <span class="ref-chip">🏪 +1,400 microempresas con acceso a energía estable</span>
-          <span class="ref-chip">🔋 Retorno de inversión en 24–36 meses</span>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- LOS 8 PROYECTOS -->
-  <section class="section">
-    <div class="section-label">Ejes Estratégicos</div>
-    <h2 class="section-title">Los 8 proyectos del programa<br/>Orden y Gestión</h2>
-    <p class="section-lead">Cada eje está diseñado para operar de forma independiente pero articulada, maximizando el impacto cruzado entre comunidades y reduciendo los costos operativos por sinergia.</p>
-
-    <div class="projects-grid">
-
-      <!-- 01 DEPORTIVO -->
-      <div class="project-card">
-        <div class="card-header">
-          <div class="card-icon" style="background:rgba(139,26,26,0.08)">🏆</div>
-          <div class="card-meta">
-            <div class="card-number">Proyecto 01</div>
-            <div class="card-title">Desarrollo Deportivo Comunitario</div>
-          </div>
-        </div>
-        <div class="card-body">
-          <p class="card-desc">Clínicas deportivas, dotación crediticia a escuelas emergentes y un brazo de acompañamiento en marketing, organización y gestión. Cada club recibe seguimiento de indicadores administrativos y sociales, eliminando el modelo asistencialista de "donar y abandonar".</p>
-          <div class="card-results">
-            <div class="card-results-label">Resultado Esperado</div>
-            <div class="card-result-item">Clubes deportivos con estructura organizacional propia en 18 meses</div>
-            <div class="card-result-item">Entrenadores certificados en gestión y metodología</div>
-            <div class="card-result-item">Reducción de conductas de riesgo en población juvenil</div>
-            <div class="card-result-item">Generación de talentos con proyección competitiva regional</div>
-          </div>
-        </div>
-        <div class="card-footer">
-          <span class="impact-tag" style="background:rgba(139,26,26,0.08);color:var(--accent)">Alto Impacto Social</span>
-          <span style="font-size:0.72rem;color:var(--slate2)">Corto–Mediano Plazo</span>
-        </div>
-      </div>
-
-      <!-- 02 SALUD -->
-      <div class="project-card">
-        <div class="card-header">
-          <div class="card-icon" style="background:rgba(0,100,150,0.08)">🏥</div>
-          <div class="card-meta">
-            <div class="card-number">Proyecto 02</div>
-            <div class="card-title">Salud Preventiva y Planificación Familiar</div>
-          </div>
-        </div>
-        <div class="card-body">
-          <p class="card-desc">Foros híbridos (digital y presencial) con especialistas en enfermería, psicoprofilaxis y salud sexual. Espacios donde la comunidad plantea sus preocupaciones reales y recibe orientación estructurada para la reorganización de la planificación familiar.</p>
-          <div class="card-results">
-            <div class="card-results-label">Resultado Esperado</div>
-            <div class="card-result-item">Reducción de embarazos no planificados en población joven</div>
-            <div class="card-result-item">Disminución de consultas de emergencia evitables</div>
-            <div class="card-result-item">Comunidades con acceso a información médica de calidad</div>
-            <div class="card-result-item">Red de multiplicadores de salud preventiva local</div>
-          </div>
-        </div>
-        <div class="card-footer">
-          <span class="impact-tag" style="background:rgba(0,100,150,0.1);color:#006496">Impacto Inmediato</span>
-          <span style="font-size:0.72rem;color:var(--slate2)">Corto Plazo</span>
-        </div>
-      </div>
-
-      <!-- 03 ECOLÓGICO -->
-      <div class="project-card">
-        <div class="card-header">
-          <div class="card-icon" style="background:rgba(26,71,49,0.08)">🌿</div>
-          <div class="card-meta">
-            <div class="card-number">Proyecto 03</div>
-            <div class="card-title">Formación de Eciudadanos y Brigadas Ecológicas</div>
-          </div>
-        </div>
-        <div class="card-body">
-          <p class="card-desc">Programa de educación ambiental con entrada directa en instituciones educativas, formando brigadas ecológicas estructuradas. Charlas teórico-prácticas que transforman el compromiso ambiental en hábito cotidiano desde la infancia.</p>
-          <div class="card-results">
-            <div class="card-results-label">Resultado Esperado</div>
-            <div class="card-result-item">Brigadas ecológicas operativas en múltiples instituciones</div>
-            <div class="card-result-item">Reducción visible de residuos sólidos en espacios públicos</div>
-            <div class="card-result-item">Cambio generacional en cultura ambiental</div>
-            <div class="card-result-item">Posicionamiento territorial como zona de gestión verde</div>
-          </div>
-        </div>
-        <div class="card-footer">
-          <span class="impact-tag" style="background:rgba(26,71,49,0.1);color:var(--green2)">Impacto Generacional</span>
-          <span style="font-size:0.72rem;color:var(--slate2)">Mediano–Largo Plazo</span>
-        </div>
-      </div>
-
-      <!-- 04 AGRÍCOLA -->
-      <div class="project-card">
-        <div class="card-header">
-          <div class="card-icon" style="background:rgba(120,100,0,0.08)">🌾</div>
-          <div class="card-meta">
-            <div class="card-number">Proyecto 04</div>
-            <div class="card-title">Fomento a la Agroproducción Local</div>
-          </div>
-        </div>
-        <div class="card-body">
-          <p class="card-desc">Capacitación técnica dirigida a productores agrícolas activos, resolviendo dudas prácticas y vacíos de conocimiento en manejo de cultivos, suelos y distribución. El objetivo es mejorar rendimientos sin depender de insumos externos costosos.</p>
-          <div class="card-results">
-            <div class="card-results-label">Resultado Esperado</div>
-            <div class="card-result-item">Aumento en rendimiento por unidad productiva</div>
-            <div class="card-result-item">Reducción de pérdidas por manejo incorrecto</div>
-            <div class="card-result-item">Creación de red de intercambio de conocimiento agrícola</div>
-            <div class="card-result-item">Mayor seguridad alimentaria a escala sectorial</div>
-          </div>
-        </div>
-        <div class="card-footer">
-          <span class="impact-tag" style="background:rgba(120,100,0,0.08);color:#786400">Seguridad Alimentaria</span>
-          <span style="font-size:0.72rem;color:var(--slate2)">Mediano Plazo</span>
-        </div>
-      </div>
-
-      <!-- 05 ALIMENTACIÓN -->
-      <div class="project-card">
-        <div class="card-header">
-          <div class="card-icon" style="background:rgba(180,60,0,0.08)">🍲</div>
-          <div class="card-meta">
-            <div class="card-number">Proyecto 05</div>
-            <div class="card-title">Comedor Comunitario Autogestionado</div>
-          </div>
-        </div>
-        <div class="card-body">
-          <p class="card-desc">Habilitación de espacios comunitarios —previa verificación legal— como comedores sectoriales autogestionados. El modelo empodera a la propia comunidad en la organización, preparación y distribución de alimentos, reduciendo la dependencia externa.</p>
-          <div class="card-results">
-            <div class="card-results-label">Resultado Esperado</div>
-            <div class="card-result-item">Acceso a alimentación digna para sectores vulnerables</div>
-            <div class="card-result-item">Generación de capacidades organizativas comunitarias</div>
-            <div class="card-result-item">Reducción de gasto familiar en alimentación</div>
-            <div class="card-result-item">Espacio de cohesión social y sentido de comunidad</div>
-          </div>
-        </div>
-        <div class="card-footer">
-          <span class="impact-tag" style="background:rgba(180,60,0,0.08);color:#b43c00">Impacto Directo</span>
-          <span style="font-size:0.72rem;color:var(--slate2)">Corto Plazo</span>
-        </div>
-      </div>
-
-      <!-- 06 EDUCACIÓN -->
-      <div class="project-card">
-        <div class="card-header">
-          <div class="card-icon" style="background:rgba(30,60,130,0.08)">📚</div>
-          <div class="card-meta">
-            <div class="card-number">Proyecto 06</div>
-            <div class="card-title">Portal de Contenido Educativo Accesible</div>
-          </div>
-        </div>
-        <div class="card-body">
-          <p class="card-desc">Plataforma digital con material pedagógico descargable para docentes, padres y estudiantes. Diseñada para operar en entornos de baja conectividad, con contenido práctico, actualizado y alineado a las necesidades reales del aula venezolana.</p>
-          <div class="card-results">
-            <div class="card-results-label">Resultado Esperado</div>
-            <div class="card-result-item">Miles de descargas de material pedagógico gratuito</div>
-            <div class="card-result-item">Mejora en calidad del proceso enseñanza-aprendizaje</div>
-            <div class="card-result-item">Apoyo real a docentes con herramientas actualizadas</div>
-            <div class="card-result-item">Reducción de la brecha educativa digital</div>
-          </div>
-        </div>
-        <div class="card-footer">
-          <span class="impact-tag" style="background:rgba(30,60,130,0.08);color:#1e3c82">Escalabilidad Alta</span>
-          <span style="font-size:0.72rem;color:var(--slate2)">Corto–Largo Plazo</span>
-        </div>
-      </div>
-
-      <!-- 07 TECNOLOGÍA / SOLAR -->
-      <div class="project-card">
-        <div class="card-header">
-          <div class="card-icon" style="background:rgba(180,140,0,0.08)">☀️</div>
-          <div class="card-meta">
-            <div class="card-number">Proyecto 07</div>
-            <div class="card-title">Democratización Energética Solar</div>
-          </div>
-        </div>
-        <div class="card-body">
-          <p class="card-desc">Programa de acceso a paneles solares a escala comunitaria, con modelos de financiamiento cooperativo y técnico-económicamente viables para hogares y pequeños comercios. Reduce la dependencia del sistema eléctrico nacional y estabiliza la economía doméstica.</p>
-          <div class="card-results">
-            <div class="card-results-label">Resultado Esperado</div>
-            <div class="card-result-item">Reducción del 40–60% en el gasto energético familiar</div>
-            <div class="card-result-item">Estabilidad operativa para microempresas locales</div>
-            <div class="card-result-item">Retorno de inversión en 24–36 meses por unidad</div>
-            <div class="card-result-item">Modelo replicable y exportable a otras comunidades</div>
-          </div>
-        </div>
-        <div class="card-footer">
-          <span class="impact-tag" style="background:rgba(180,140,0,0.08);color:#b48c00">ROI Medible</span>
-          <span style="font-size:0.72rem;color:var(--slate2)">Mediano Plazo</span>
-        </div>
-      </div>
-
-      <!-- 08 GESTIÓN INTEGRAL -->
-      <div class="project-card" style="border-color:rgba(184,150,12,0.3)">
-        <div class="card-header" style="border-bottom-color:rgba(184,150,12,0.15)">
-          <div class="card-icon" style="background:rgba(184,150,12,0.1)">⚙️</div>
-          <div class="card-meta">
-            <div class="card-number">Proyecto 08</div>
-            <div class="card-title">Sistema de Monitoreo y Gestión Integral</div>
-          </div>
-        </div>
-        <div class="card-body">
-          <p class="card-desc">Infraestructura de gestión transversal que mide, registra y comunica los resultados de los 7 ejes anteriores. Incluye tableros de indicadores sociales, reportes periódicos al inversor y mecanismos de ajuste en tiempo real según resultados observados.</p>
-          <div class="card-results">
-            <div class="card-results-label">Resultado Esperado</div>
-            <div class="card-result-item">Transparencia total en el uso de los recursos invertidos</div>
-            <div class="card-result-item">Toma de decisiones basada en datos reales</div>
-            <div class="card-result-item">Construcción de evidencia para escalar o replicar</div>
-            <div class="card-result-item">Credibilidad institucional del programa</div>
-          </div>
-        </div>
-        <div class="card-footer">
-          <span class="impact-tag" style="background:rgba(184,150,12,0.1);color:var(--gold)">Columna Vertebral</span>
-          <span style="font-size:0.72rem;color:var(--slate2)">Permanente</span>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- HOJA DE RUTA -->
-  <section class="section">
-    <div class="section-label">Hoja de Ruta</div>
-    <h2 class="section-title">Implementación por fases</h2>
-    <p class="section-lead">Un programa secuenciado estratégicamente para garantizar sostenibilidad operativa desde el primer día.</p>
-
-    <div class="timeline">
-      <div class="tl-item">
-        <div class="tl-dot"></div>
-        <div class="tl-phase">Fase 1 · Meses 1–3</div>
-        <div class="tl-title">Diagnóstico, instalación y primeros programas</div>
-        <div class="tl-desc">Mapeo comunitario, identificación de actores clave, habilitación de espacios físicos y digitales. Arranque de proyectos de salud, deportivo y ecológico por su capacidad de generar confianza rápidamente.</div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-dot"></div>
-        <div class="tl-phase">Fase 2 · Meses 4–8</div>
-        <div class="tl-title">Expansión y articulación de ejes</div>
-        <div class="tl-desc">Incorporación de los proyectos de educación, alimentación y agroproducción. Primeros reportes de indicadores. Inicio de proceso de formación de multiplicadores locales.</div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-dot"></div>
-        <div class="tl-phase">Fase 3 · Meses 9–18</div>
-        <div class="tl-title">Consolidación, tecnología y autosuficiencia</div>
-        <div class="tl-desc">Lanzamiento del programa solar. Consolidación del portal educativo. Los primeros proyectos alcanzan niveles de autogestión. Construcción de evidencia documentada para escala.</div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-dot"></div>
-        <div class="tl-phase">Fase 4 · A partir del mes 19</div>
-        <div class="tl-title">Replicación y proyección regional</div>
-        <div class="tl-desc">El modelo probado en Carabobo se sistematiza como metodología exportable a otros estados venezolanos o países con contextos similares. Retorno de visibilidad institucional para el inversor.</div>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- ROI SOCIAL -->
-  <section class="section">
-    <div class="section-label">Retorno de la Inversión</div>
-    <h2 class="section-title">Lo que genera cada dólar invertido</h2>
-    <p class="section-lead">En proyectos sociales estructurados, el retorno no es solo ético —es económicamente demostrable. Estas son las métricas de impacto proyectadas basadas en modelos equivalentes ya ejecutados en la región.</p>
-
-    <table class="roi-table">
-      <thead>
-        <tr>
-          <th>Eje del Proyecto</th>
-          <th>Inversión Relativa</th>
-          <th>Beneficiarios Directos</th>
-          <th>Indicador Clave</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>🏆 Deportivo</td>
-          <td>Media</td>
-          <td class="highlight">500–1,200 jóvenes / año</td>
-          <td>Clubes autogestionados en 18 meses</td>
-        </tr>
-        <tr>
-          <td>🏥 Salud Preventiva</td>
-          <td>Baja</td>
-          <td class="highlight">2,000–5,000 personas / ciclo</td>
-          <td>–35% en consultas evitables</td>
-        </tr>
-        <tr>
-          <td>🌿 Ecológico</td>
-          <td>Muy Baja</td>
-          <td class="highlight">Toda la comunidad escolar</td>
-          <td>–60% residuos en zonas intervenidas</td>
-        </tr>
-        <tr>
-          <td>🌾 Agroproductivo</td>
-          <td>Baja</td>
-          <td class="highlight">Productores + familias</td>
-          <td>+25% rendimiento productivo</td>
-        </tr>
-        <tr>
-          <td>🍲 Alimentación</td>
-          <td>Media</td>
-          <td class="highlight">300–800 personas / día</td>
-          <td>–30% gasto alimentario familiar</td>
-        </tr>
-        <tr>
-          <td>📚 Educación Digital</td>
-          <td>Baja</td>
-          <td class="highlight">Ilimitado (plataforma escalable)</td>
-          <td>+92% satisfacción docente</td>
-        </tr>
-        <tr>
-          <td>☀️ Solar</td>
-          <td>Alta (con retorno)</td>
-          <td class="highlight">Hogares y comercios</td>
-          <td>ROI financiero en 24–36 meses</td>
-        </tr>
-        <tr>
-          <td>⚙️ Gestión Integral</td>
-          <td>Baja (transversal)</td>
-          <td class="highlight">Todos los ejes</td>
-          <td>Datos para escala y replicación</td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
-
-  <!-- BLOQUE INVERSOR -->
-  <div class="investor-box">
-    <h3>¿Por qué invertir en este programa?</h3>
-    <p>Venezuela está en un punto de inflexión. Las comunidades que reciban organización, capacitación y estructura hoy, serán las más competitivas del país mañana. Este programa no es una donación —es una siembra estratégica con retorno social, reputacional y, en varios ejes, financiero medible.</p>
-
-    <div class="investor-pillars">
-      <div class="pillar">🎯 Metodología probada regionalmente</div>
-      <div class="pillar">📊 Indicadores medibles desde el día 1</div>
-      <div class="pillar">🔄 Modelo replicable y exportable</div>
-      <div class="pillar">🛡️ Estructura Unica y ejemplar</div>
-      <div class="pillar">🤝 Comunidades como actores, no como receptores</div>
-      <div class="pillar">💡 Visibilidad institucional para el inversor</div>
+    <!-- Botones de capa base (inferior izquierda) + descarga -->
+    <div class="base-buttons">
+        <button id="btnCalle" class="base-btn active"><i class="fas fa-map"></i> Vista calle</button>
+        <button id="btnSatelite" class="base-btn"><i class="fas fa-satellite"></i> Satélite</button>
+        <button class="download-btn" id="downloadMapBtn">
+            <i class="fas fa-download"></i> <span>Descargar mapa</span>
+        </button>
     </div>
 
-    <p style="font-size:0.88rem">El inversor que participe en esta iniciativa no financia asistencialismo. Financia <strong style="color:var(--gold3)">organización, capacidad instalada y capital humano</strong> —los tres activos más escasos y más rentables en cualquier sociedad en reconstrucción.</p>
+    <script>
+        (function() {
+            // ---------- CONFIGURACIÓN INICIAL DEL MAPA ----------
+            const map = L.map('map', { 
+                center: [10.155, -67.91], 
+                zoom: 13,
+                zoomControl: false,
+                attributionControl: true
+            });
 
-    <div class="investor-note">Este documento es de carácter estrictamente confidencial. No contiene datos de personas físicas ni referencias institucionales que puedan comprometer su difusión estratégica.</div>
-  </div>
+            // Control de zoom en la esquina inferior izquierda (arriba de los botones)
+            L.control.zoom({ position: 'bottomleft' }).addTo(map);
 
-</div>
+            // Capas base
+            const capaCalles = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; CartoDB'
+            });
 
-<!-- FOOTER -->
-<div id="footer">
-  <div class="footer-mark">Orden y Gestión · Carabobo</div>
-  <div class="footer-sub">Propuesta Social Estratégica · Estado Carabobo · Venezuela · 2026</div>
-</div>
+            const capaSatelite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+            });
 
-<!-- BOTÓN IMPRIMIR -->
-<button class="print-btn no-print" onclick="window.print()">
-  🖨️ Descargar / Imprimir PDF
-</button>
+            capaCalles.addTo(map);  // por defecto
 
+            // Botones de cambio de capa base
+            const btnCalle = document.getElementById('btnCalle');
+            const btnSatelite = document.getElementById('btnSatelite');
+
+            function setBaseLayer(activo, inactivo, layer) {
+                map.eachLayer((l) => {
+                    if (l instanceof L.TileLayer) map.removeLayer(l);
+                });
+                layer.addTo(map);
+                activo.classList.add('active');
+                inactivo.classList.remove('active');
+            }
+
+            btnCalle.addEventListener('click', () => setBaseLayer(btnCalle, btnSatelite, capaCalles));
+            btnSatelite.addEventListener('click', () => setBaseLayer(btnSatelite, btnCalle, capaSatelite));
+
+            // ---------- FUNCIÓN PARA BOTÓN "VER EN GOOGLE MAPS" ----------
+            window.abrirGoogleMaps = function(lat, lng) {
+                const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+                window.open(url, '_blank');
+            };
+
+            // ---------- DATOS COMPLETOS (corregidos y aumentados) ----------
+
+        
+            // 1. DEPORTE
+            const deporte = [
+                {lat:10.106494525210145, lng:-67.92012630646292, nombre:"Campo deportivo argimiro gabardon"},
+                {lat:10.105860565095638, lng:-67.92214717347639, nombre:"Cancha deportivo La unión"},
+                {lat:10.106518739821755, lng:-67.90630109327216, nombre:"Campo Deportivo el Charal (Campo de béisbol)"},
+                {lat:10.104874628084584, lng:-67.8946821909811, nombre:"Cancha de Pirital (baloncesto)"},
+                {lat:10.115009075413653, lng:-67.89261528140537, nombre:"Cancha Troncal 11"},
+                {lat:10.116135103852837, lng:-67.91948380257482, nombre:"Campo deportivo Alberto Martínez"},
+                {lat:10.116483398548901, lng:-67.91938529783592, nombre:"Cancha deportiva Cascabel"},
+                {lat:10.143038980311742, lng:-67.90106052952014, nombre:"Academia de béisbol G&G"},
+                {lat:10.137146960166234, lng:-67.8769174665642, nombre:"Cancha isla la culebra"},
+                {lat:10.156990448636332, lng:-67.91467035060006, nombre:"Cancha 3 de mayo"},
+                {lat:10.162530835221428, lng:-67.91698963696683, nombre:"Campo de béisbol Enrrique Marquez"},
+                {lat:10.162016002543654, lng:-67.92820063193275, nombre:"Cancha las agüitas sector 6"},
+                {lat:10.162393125611912, lng:-67.92344433904316, nombre:"Cancha Aguitas sector 5"},
+                {lat:10.162043589488297, lng:-67.92822928883692, nombre:"Cancha Romulo Gallegos"},
+                {lat:10.176251220383968, lng:-67.89773916501133, nombre:"Academia de Taekwondo Lum Fatt"},
+                {lat:10.176208470055267, lng:-67.89789014841733, nombre:"Cancha Buena ventura"},
+                {lat:10.168796340066066, lng:-67.91076254632844, nombre:"Campo de Béisbol Menor Los Cerritos"},
+                {lat:10.169499010684737, lng:-67.90846169375328, nombre:"Cancha de Fútbol Los Cerritos"},
+                {lat:10.169439990818963, lng:-67.90892383894932, nombre:"Cancha Bascket Paraparal"}
+            ];
+
+            // 2. SALUD
+            const salud = [
+                {lat:10.184735716198, lng:-67.9160520532341, nombre:"Seguro Social de Paraparal"},
+                {lat:10.185938587050927, lng:-67.91953485477745, nombre:"CDI Paraparal"},
+                {lat:10.188943689752515, lng:-67.93663465594301, nombre:"AMBULATORIO LOS GUAYOS"},
+                {lat:10.179984848223391, lng:-67.93996722683744, nombre:"Centro Pediátrico Los Guayos"}
+            ];
+
+            // 3. AGRICULTURA
+            const agricultura = [
+                {lat:10.12305230189021, lng:-67.9000093398857, nombre:"Hacienda El Olivo (Cooperativa)"},
+                {lat:10.101586292193456, lng:-67.91452716791642, nombre:"Zona de cultivo la Union"},
+                {lat:10.099774362163824, lng:-67.88998776353333, nombre:"Zona de cultivo Pirital"},
+                {lat:10.104746401899796, lng:-67.89400535571667, nombre:"Hacienda familia Bericoto"},
+                {lat:10.108969735386202, lng:-67.88670164572545, nombre:"Zona de cultivo orilla lago pirital"},
+                {lat:10.136491265248768, lng:-67.91573137211373, nombre:"GP GRANJA PORCINA"},
+                {lat:10.132614601141881, lng:-67.8810274687416, nombre:"Finca La Vegareña"},
+                {lat:10.142299119004067, lng:-67.88037754409099, nombre:"Zona de cultivo la culebra"},
+                {lat:10.133737695489652, lng:-67.9055094098112, nombre:"Zona potencial de cultivo la culebra"},
+                {lat:10.141541606559212, lng:-67.9038019678467, nombre:"Zona de cultivo la glorieta"},
+                {lat:10.158275692090216, lng:-67.89498081513577, nombre:"Hacienda Delgado"}
+            ];
+
+            // 4. INSTITUCIONES EDUCATIVAS (corregidas: todas con longitud negativa)
+            const educativas = [
+                {lat:10.17582273, lng:-67.93876326, nombre:"UNIDAD EDUCATIVA SANTISIMA TRINIDAD"},
+                {lat:10.18840028, lng:-67.93775610, nombre:"ESCUELA BASICA LICENCIADA ELISA GUEVARA DE CACERES"},
+                {lat:10.16353843, lng:-67.92732256, nombre:"JARDIN DE INFANCIA LAS AGUITAS"},
+                {lat:10.17300321, lng:-67.92346908, nombre:"INSTITUTO DE EDUCACION ESPECIAL LAS AGUITAS"},
+                {lat:10.17026607, lng:-67.93051435, nombre:"LICEO NACIONAL BOLIVARIANO ANDRES BELLO"},
+                {lat:10.17372458, lng:-67.93032729, nombre:"E.B.N. LAS AGUITAS I Y II JULIO GARMENDIA"},
+                {lat:10.18758100, lng:-67.93770326, nombre:"ANEXO RURAL 6"},
+                {lat:10.18775629, lng:-67.93962636, nombre:"MARIA FIDELA CHIRINOS"},
+                {lat:10.18179363, lng:-67.93795482, nombre:"GRUPO ESCOLAR BATALLA DE AYACUCHO"},
+                {lat:10.17658373, lng:-67.93231285, nombre:"PRE-ESCOLAR BATALLA DE JUNIN"},
+                {lat:10.15642914, lng:-67.91121757, nombre:"GRUPO ESCOLAR YORACO"},
+                {lat:10.11623263, lng:-67.89293778, nombre:"U.E. SIMON JOSE GUEDEZ ORTIZ"},
+                {lat:10.13809854, lng:-67.89927120, nombre:"U.E. LICEO BOLIVARIANO LA GLORIETA"},
+                {lat:10.10626986, lng:-67.89898139, nombre:"ESCUELA NACIONAL PIRITAL"},
+                {lat:10.12010510, lng:-67.92210809, nombre:"JARDIN DE INFANCIA CABRIALES"},
+                {lat:10.16936349, lng:-67.90777085, nombre:"E.B.N.B. LOS CERRITOS"},
+                {lat:10.10273061, lng:-67.90611509, nombre:"U.E. ESTADAL MARIA ESCAMILLO"},
+                {lat:10.17143589, lng:-67.92443324, nombre:"E.B.N.B. LAS AGUITAS III"},
+                {lat:10.19276410, lng:-67.93257262, nombre:"UNIDAD BASICA RAMONA DE ROMERO"},
+                {lat:10.16034137, lng:-67.89935852, nombre:"GRUPO ESCOLAR LOS HIJOS DE BOLIVAR"},
+                {lat:10.16992284, lng:-67.90763180, nombre:"ESCUELA BOLIVARIANA LOS CERRITOS"},
+                {lat:10.13534322, lng:-67.86886095, nombre:"U.E.B. RURAL LA DIOSA DE LOS TACARIGUAS"},
+                {lat:10.17934830, lng:-67.94041959, nombre:"U.E. ANTONIO JOSE DE SUCRE"},
+                {lat:10.16328418, lng:-67.90185788, nombre:"U.E. LUISA TERESA DE MONTEMAYOR"},
+                {lat:10.16632711, lng:-67.92017345, nombre:"ESCUELA BASICA ARTURO USLAR PIETRI"},
+                {lat:10.19089816, lng:-67.91675933, nombre:"PRE-ESCOLAR TACARIGUA I"},
+                {lat:10.16736417, lng:-67.92654609, nombre:"ESCUELA TECNOLOGICA RURAL FRANCISCO DE MIRANDA"},
+                {lat:10.19139831, lng:-67.93764334, nombre:"UNIDAD EDUCATIVA DIVINO NIÑO"},
+                {lat:10.16686521, lng:-67.91808436, nombre:"UNIDAD EDUCATIVA MANUELA SAENZ"},
+                {lat:10.15669828, lng:-67.90803348, nombre:"JARDIN DE INFANCIA EL ROBLE"},
+                {lat:10.17438985, lng:-67.93102030, nombre:"ESCUELA DE ESPECIALIDADES FEMENINAS"},
+                {lat:10.18453270, lng:-67.93326067, nombre:"CENTRO EDUCACION INICIAL GUAPARO"},
+                {lat:10.10911423, lng:-67.92403439, nombre:"ESCUELA BOLIVARIANA NACIONAL LA UNION"},
+                {lat:10.17175085, lng:-67.92065388, nombre:"ESCUELA BASICA ESTADAL MIGUEL OTERO SILVA"},
+                {lat:10.17811493, lng:-67.93635418, nombre:"UNIDAD EDUCATIVA VICENTE EMPARAN"},
+                {lat:10.16440806, lng:-67.92468052, nombre:"MATERNAL PANCHITO MANDEFUA"},
+                {lat:10.17936477, lng:-67.90940662, nombre:"ESCUELA BASICA JUAN VICENTE GONZALEZ DELGADO"},
+                {lat:10.18801352, lng:-67.93397279, nombre:"CENTRO EDUCACION INICIAL LIBERTADOR"},
+                {lat:10.17358364, lng:-67.92323791, nombre:"ESCUELA DE NIÑOS ESPECIALES"},
+                {lat:10.15408739, lng:-67.90740000, nombre:"ESCUELA BASICA EL ROBLE"},
+                {lat:10.16761002, lng:-67.90245191, nombre:"CENTRO DE VOTACION 23 DE ENERO"},
+                {lat:10.15170569, lng:-67.90905075, nombre:"CENTRO DE VOTACION 12 DE MARZO"},
+                {lat:10.18120472, lng:-67.91641451, nombre:"BASE DE MISION SANTA ROSA- ALI PRIMERA"},
+                {lat:10.17026611, lng:-67.93154597, nombre:"C.E.I. SIMONCITO ARAGUITA"},
+                {lat:10.17666290, lng:-67.92452334, nombre:"PRE-ESCOLAR LA ALEGRIA"},
+                {lat:10.18248855, lng:-67.91107779, nombre:"PRE-ESCOLAR ZAIDA CEDEÑO"}
+            ];
+
+            // 5. TURISMO
+            const turismo = [
+                {lat:10.107459521786417, lng:-67.90362334258398, nombre:"Tanque de agua del Charal"},
+                {lat:10.193917531999569, lng:-67.90312508538702, nombre:"Pozo de Manolo (Lugar histórico)"},
+                {lat:10.122651677672904, lng:-67.8931221102911, nombre:"Puente Samán Mocho / Qda. Bucaral"},
+                {lat:10.117876426598874, lng:-67.92429586630567, nombre:"Estatua de José Gregorio Hernández"},
+                {lat:10.138565601941455, lng:-67.87497501472926, nombre:"Isla La Culebra (senderismo)"},
+                {lat:10.154550987350868, lng:-67.90653005152592, nombre:"Parque El Roble"},
+                {lat:10.158284592423664, lng:-67.9142693515971, nombre:"Plaza del Roble"}
+            ];
+
+            // 6. SECTORES (con nombres permanentes)
+            const sectores = [
+                {lat:10.189074247403141, lng:-67.9376637190773, nombre:"Casco Los guayos"},
+                {lat:10.19300175453465, lng:-67.93458362731073, nombre:"Araguaney"},
+                {lat:10.190918539068392, lng:-67.93194618248124, nombre:"La pelayera"},
+                {lat:10.200320, lng:-67.909262, nombre:"Las Vegas"},
+                {lat:10.187682, lng:-67.917832, nombre:"Paraparal"},
+                {lat:10.180420, lng:-67.937449, nombre:"Los Guayos Segunda Etapa"},
+                {lat:10.176762, lng:-67.936114, nombre:"Los Guayos Primera Etapa"},
+                {lat:10.183776, lng:-67.932945, nombre:"Negro Primero"},
+                {lat:10.185099, lng:-67.937146, nombre:"Ali Primera"},
+                {lat:10.179764, lng:-67.929018, nombre:"Felix Rios"},
+                {lat:10.170070727327197, lng:-67.9296827894134, nombre:"Aguitas III"},
+                {lat:10.170385956175712, lng:-67.92222540778711, nombre:"Aguitas II"},
+                {lat:10.1648141630902, lng:-67.91992305639741, nombre:"Piedras Negras"},
+                {lat:10.163188951329428, lng:-67.92702292247675, nombre:"Aguitas VI"},
+                {lat:10.163970414976767, lng:-67.92396451876725, nombre:"Aguitas V"},
+                {lat:10.175189568479277, lng:-67.93005456932828, nombre:"Aguitas I"},
+                {lat:10.167785515081059, lng:-67.92178589260908, nombre:"Aguitas IV"},
+                {lat:10.19026110081683, lng:-67.90888375222757, nombre:"Bosque Real"},
+                {lat:10.189897357323387, lng:-67.91535029759171, nombre:"Tacarigua I"},
+                {lat:10.187466651169077, lng:-67.91417851751989, nombre:"Tacarigua II"},
+                {lat:10.184621903761819, lng:-67.91024062195719, nombre:"Tacarigua III"},
+                {lat:10.181535033466716, lng:-67.90807615168501, nombre:"Tacarigua IV"},
+                {lat:10.178733969681538, lng:-67.90887401892365, nombre:"Tacarigua V"},
+                {lat:10.181316860038566, lng:-67.91458975192252, nombre:"Miralvalle"},
+                {lat:10.176134030757233, lng:-67.91513875640082, nombre:"Quintas 2000"},
+                {lat:10.177345582801443, lng:-67.91209890707637, nombre:"Parque Nomentana"},
+                {lat:10.16886762852786, lng:-67.89956893107698, nombre:"San Judas Tadeo"},
+                {lat:10.170656326652242, lng:-67.90945100876883, nombre:"Los Cerritos"},
+                {lat:10.174906348292124, lng:-67.89898301632789, nombre:"Buenaventura"},
+                {lat:10.16269323563398, lng:-67.9003381923896, nombre:"Alicia Pietri"},
+                {lat:10.15926130072191, lng:-67.91397071240154, nombre:"El Roble"},
+                {lat:10.137459447381525, lng:-67.90163805375425, nombre:"La Culebra"},
+                {lat:10.137917413637675, lng:-67.87516708914609, nombre:"Isla La culebra"},
+                {lat:10.140974298595756, lng:-67.90093545986544, nombre:"Glorieta"},
+                {lat:10.121372833264271, lng:-67.89234929596488, nombre:"Saman Mocho"},
+                {lat:10.108307086192935, lng:-67.89407769581351, nombre:"Pirital"},
+                {lat:10.105722521572433, lng:-67.90645043146446, nombre:"Charal"},
+                {lat:10.11412578623221, lng:-67.92326563539585, nombre:"Cascabel"},
+                {lat:10.104907667184557, lng:-67.92220230144322, nombre:"La Union"}
+            ];
+
+            // ---------- LÍMITE MUNICIPAL (línea azul punteada) ----------
+            const limites = [
+                [10.209083747610128, -67.91127684975459], [10.206527525312698, -67.91100137490947], [10.212586321145846, -67.91235077093202],
+                [10.210432307328059, -67.91432487671563], [10.207560266215832, -67.91848766499842], [10.206926724180223, -67.91870224200103],
+                [10.203716758811204, -67.92265045356822], [10.200760182980076, -67.92685615735161], [10.196620930842732, -67.93252098276312],
+                [10.193664289241944, -67.93758499332628], [10.190876573404372, -67.94230568122039], [10.18694838706836, -67.95088875010374],
+                [10.186145848429986, -67.95526611510215], [10.185089873460145, -67.95462238495533], [10.181626251018136, -67.95402157015162],
+                [10.182133124944214, -67.94915067870731], [10.17997890518864, -67.9470263691435], [10.175923863770995, -67.94359314155811],
+                [10.170474820764458, -67.94067489813597], [10.169228708681796, -67.93762790864201], [10.167391212594463, -67.9358898372456],
+                [10.166271813215332, -67.93073999596662], [10.163821793308857, -67.92898046684334], [10.160484667153899, -67.92925941657364],
+                [10.160146728385515, -67.92923795890208], [10.159660940780196, -67.92934524725989], [10.159301879821893, -67.9291735858807],
+                [10.158668241994162, -67.9293452472532], [10.15769666155296, -67.92898046683666], [10.151465803720669, -67.92438852504281],
+                [10.150367470336896, -67.92419540595968], [10.149670449190307, -67.9238520832147], [10.147283668311443, -67.92357313348441],
+                [10.146671128756063, -67.92290794566601], [10.145319313110654, -67.92307960702512], [10.144453303255602, -67.92194235043239],
+                [10.144242080984439, -67.92119133192776], [10.143228212143553, -67.92022573670754], [10.14240444125379, -67.91996824455279],
+                [10.139743013431438, -67.91664230546085], [10.138813620729131, -67.9161273213434], [10.13756738526857, -67.91589128687696],
+                [10.137018195268585, -67.91623460962194], [10.136659108990484, -67.91632044030818], [10.135117145693535, -67.91769373128807],
+                [10.134652442971223, -67.91780101964588], [10.132709133378766, -67.91870224185143], [10.132624641390136, -67.91913139528265],
+                [10.131821966387527, -67.91975366775792], [10.131674104983656, -67.92037594023317], [10.130871427495572, -67.92046177093673],
+                [10.129329436360663, -67.92029010956423], [10.124154206364205, -67.92501079743494], [10.11847191893599, -67.92456018634948],
+                [10.112831779474227, -67.92466747473576], [10.111141830808938, -67.92507517049542], [10.110423599825694, -67.92509662812846],
+                [10.10894488414669, -67.9245172709963], [10.097727547870177, -67.92438852497811], [10.097009286944402, -67.92245733442823],
+                [10.098234554471412, -67.91996824452718], [10.096713532014665, -67.91318762031396], [10.094791118315447, -67.91084873397705],
+                [10.089594206205353, -67.90833818630618], [10.089742086976688, -67.89898264136218], [10.091854662016654, -67.89430486880227],
+                [10.092425054892002, -67.89147245615622], [10.094875620219776, -67.88831817831453], [10.097748673066574, -67.87486421798185],
+                [10.10093857666085, -67.87055122588646], [10.101530078479591, -67.87359821524811], [10.102882078551435, -67.87387716497838],
+                [10.10478331903489, -67.87439214909585], [10.106388802386748, -67.876666662403], [10.10607193133602, -67.87743913857919],
+                [10.106050806588208, -67.87840473379941], [10.106536675436853, -67.87941324436278], [10.110803839859535, -67.88147318083261],
+                [10.112578287678204, -67.88288938716065], [10.114268228786853, -67.88325416757718], [10.115049823542561, -67.88381206703777],
+                [10.11545118227256, -67.88473474691487], [10.125780716179223, -67.88821088978649], [10.126477789295363, -67.8873954982672],
+                [10.132286673090952, -67.88692342950569], [10.138095451677966, -67.88754570198432], [10.13970076825058, -67.88688051416592],
+                [10.13985622340783, -67.88271114431488], [10.136556941958062, -67.88109172405622], [10.135187977221667, -67.88153632702556],
+                [10.13501430119527, -67.88147661456705], [10.13489482509524, -67.88151751825346], [10.134475668250063, -67.88148600229877],
+                [10.133854304338376, -67.88210072417085], [10.133801741690949, -67.88160391249434], [10.131170911786635, -67.8818330992092],
+                [10.131747434419093, -67.87876426750812], [10.132765955206978, -67.87623423828646], [10.13395742826141, -67.87499655424858],
+                [10.135590892207327, -67.86487253304712], [10.136159720043874, -67.86420879080516], [10.137404988266423, -67.86483348935755],
+                [10.137454952644715, -67.86627810481001], [10.137720147984668, -67.86725810066623], [10.138304345647471, -67.86896821301113],
+                [10.139522701820036, -67.8704401590044], [10.140160703533864, -67.87332158113867], [10.140268318168603, -67.87343871215144],
+                [10.143085502293122, -67.87496531925564], [10.143669690197513, -67.87573838375748], [10.143654316850242, -67.87734698257864],
+                [10.144061710414604, -67.87952171447971], [10.14383495368455, -67.88052513653172], [10.143856984035997, -67.87997343025863],
+                [10.143907335104931, -67.880665384548], [10.14393530791991, -67.88112858188158], [10.143627606846776, -67.88147100690347],
+                [10.143321304121313, -67.88200950932371], [10.14217581325373, -67.88268299256256], [10.140124762287636, -67.88276875290505],
+                [10.139941799982186, -67.88601632895606], [10.140447440976354, -67.88633398987885], [10.141032919011279, -67.88629681679275],
+                [10.141575150555067, -67.88667530639668], [10.143774006538564, -67.88590818905898], [10.147757375760186, -67.88435834118235],
+                [10.147727437197162, -67.88382102111963], [10.148525797945956, -67.88377708926997], [10.149270932845052, -67.88285452083325],
+                [10.151813569927725, -67.88357091692073], [10.152927933689867, -67.88373650612702], [10.15302772728089, -67.88440224234823],
+                [10.153400289695341, -67.88541267441585], [10.155159975984638, -67.88469286828602], [10.156094701438466, -67.88471990325873],
+                [10.156304265840756, -67.88494970051825], [10.158030672146317, -67.88489563057949], [10.15830343686954, -67.8846387983437],
+                [10.159866839760781, -67.886848907362], [10.161224000329616, -67.88816686225584], [10.163213161541732, -67.88910632752992],
+                [10.164836414323368, -67.889471299648], [10.170477818974122, -67.89291825861989], [10.173245264086605, -67.89405372748949],
+                [10.176252172433573, -67.89435787091384], [10.17880003943691, -67.89397262255865], [10.18149423698287, -67.89389151763402],
+                [10.183290356039556, -67.89322916081724], [10.185126378399106, -67.89331026576653], [10.186097603347065, -67.89839959933771],
+                [10.18794691389124, -67.89951479191633], [10.191445939711665, -67.90015687249334], [10.197173349670685, -67.90369845386108],
+                [10.198596871149675, -67.90715893034303], [10.201058084848738, -67.90638167489952], [10.20519554172376, -67.90938931555779],
+                [10.206505946931202, -67.91099789644403], [10.209238540893097, -67.91129658143669]
+            ];
+            const limitePoly = L.polygon(limites, { color: '#1E90FF', weight: 3, dashArray: '8 8', fill: false, opacity: 0.9 }).addTo(map);
+
+            // ---------- FUNCIÓN PARA CREAR MARCADORES CON POPUP Y BOTÓN GOOGLE MAPS ----------
+            function crearGrupoMarcadores(datos, color, categoria) {
+                const grupo = L.featureGroup();
+                datos.forEach(item => {
+                    const descripcion = item.info ? `<br><small>${item.info}</small>` : '';
+                    const popupContent = `
+                        <b>${item.nombre}</b>${descripcion}
+                        <br><span style="background:${color}; padding:3px 10px; border-radius:20px; color:white; font-size:0.8rem; display:inline-block; margin:6px 0;">${categoria}</span>
+                        <button class="btn-google-maps" onclick="abrirGoogleMaps(${item.lat}, ${item.lng})">
+                            <i class="fab fa-google"></i> Ver en Google Maps
+                        </button>
+                    `;
+                    const marker = L.circleMarker([item.lat, item.lng], {
+                        radius: 8,
+                        fillColor: color,
+                        color: '#fff',
+                        weight: 2,
+                        fillOpacity: 0.95
+                    }).bindPopup(popupContent);
+                    grupo.addLayer(marker);
+                });
+                return grupo;
+            }
+
+            // Función para crear marcadores de sectores con tooltip permanente
+            function crearSectores(datos) {
+                const grupo = L.featureGroup();
+                datos.forEach(item => {
+                    const marker = L.circleMarker([item.lat, item.lng], {
+                        radius: 6,
+                        fillColor: '#808080',
+                        color: '#333',
+                        weight: 1,
+                        fillOpacity: 0.8
+                    }).bindTooltip(item.nombre, { permanent: true, direction: 'top', className: 'sector-tooltip' });
+                    grupo.addLayer(marker);
+                });
+                return grupo;
+            }
+
+            // Crear grupos por categoría
+            const grupoDeporte = crearGrupoMarcadores(deporte, '#1f77b4', 'Deporte');
+            const grupoSalud = crearGrupoMarcadores(salud, '#c9a03d', 'Salud');
+            const grupoAgricultura = crearGrupoMarcadores(agricultura, '#2e8b57', 'Agricultura');
+            const grupoEducacion = crearGrupoMarcadores(educativas, '#9467bd', 'Educación');
+            const grupoTurismo = crearGrupoMarcadores(turismo, '#ff8c42', 'Turismo');
+            const grupoSectores = crearSectores(sectores);
+
+            // Añadir todos los grupos al mapa
+            grupoDeporte.addTo(map);
+            grupoSalud.addTo(map);
+            grupoAgricultura.addTo(map);
+            grupoEducacion.addTo(map);
+            grupoTurismo.addTo(map);
+            grupoSectores.addTo(map);
+
+            // Control de capas superpuestas (solo overlays) en la parte inferior derecha
+            const overlays = {
+               "⚽ Deporte": grupoDeporte,
+                "🏥 Salud": grupoSalud,
+                "🌽 Agricultura": grupoAgricultura,
+                "📚 Educación": grupoEducacion,
+                "🏞️ Turismo": grupoTurismo,
+                "🚩 Límite municipal": limitePoly
+            };
+            L.control.layers(null, overlays, { collapsed: false, position: 'bottomright' }).addTo(map);
+
+            // ---------- FUNCIÓN DE DESCARGA DEL MAPA CON MARCA DE AGUA ----------
+            document.getElementById('downloadMapBtn').addEventListener('click', function() {
+                const mapContainer = document.getElementById('map');
+                html2canvas(mapContainer, {
+                    scale: 1.5,
+                    backgroundColor: '#ffffff',
+                    allowTaint: false,
+                    useCORS: true,
+                    logging: false
+                }).then(canvas => {
+                    const watermarkedCanvas = document.createElement('canvas');
+                    watermarkedCanvas.width = canvas.width;
+                    watermarkedCanvas.height = canvas.height;
+                    const ctx = watermarkedCanvas.getContext('2d');
+                    
+                    ctx.drawImage(canvas, 0, 0);
+                    
+                    // Marca de agua estratégica
+                    ctx.font = 'bold 28px "Segoe UI", Roboto, sans-serif';
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                    ctx.shadowColor = 'black';
+                    ctx.shadowBlur = 10;
+                    ctx.shadowOffsetX = 3;
+                    ctx.shadowOffsetY = 3;
+                    ctx.fillText('BALDWYN MUJICA', 60, 100);
+                    ctx.font = 'bold 24px "Segoe UI", Roboto, sans-serif';
+                    ctx.fillStyle = 'rgba(255, 215, 100, 0.9)';
+                    ctx.fillText('Orden y Gestión • Los Guayos Digital', 60, 160);
+                    ctx.font = '20px monospace';
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+                    ctx.fillText('@balwynmujica', canvas.width - 300, canvas.height - 60);
+                    
+                    // Escudo simbólico
+                    ctx.beginPath();
+                    ctx.arc(120, canvas.height - 80, 30, 0, 2 * Math.PI);
+                    ctx.fillStyle = '#002c47';
+                    ctx.shadowBlur = 8;
+                    ctx.fill();
+                    ctx.fillStyle = '#e3b13c';
+                    ctx.font = 'bold 20px "Segoe UI"';
+                    ctx.fillText('1·3', 95, canvas.height - 75);
+                    
+                    const link = document.createElement('a');
+                    link.download = 'Mapa_LosGuayos_OrdenGestion.png';
+                    link.href = watermarkedCanvas.toDataURL('image/png');
+                    link.click();
+                }).catch(error => {
+                    alert('Error al generar la imagen, por favor intente de nuevo.');
+                    console.error(error);
+                });
+            });
+
+            // ---------- Toggle panel superior ----------
+            const brandPanel = document.getElementById('brandPanel');
+            const toggleBtn = document.getElementById('toggleBrandBtn');
+            toggleBtn.addEventListener('click', () => {
+                brandPanel.classList.toggle('collapsed');
+                const icon = toggleBtn.querySelector('i');
+                if (brandPanel.classList.contains('collapsed')) {
+                    icon.classList.remove('fa-chevron-up');
+                    icon.classList.add('fa-chevron-down');
+                } else {
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-up');
+                }
+            });
+        })();
+    </script>
 </body>
 </html>
